@@ -8,8 +8,8 @@ from .model import BiSeNet
 import torchvision.transforms as transforms
 
 class FaceParsing():
-    def __init__(self, left_cheek_width=80, right_cheek_width=80):
-        self.net = self.model_init()
+    def __init__(self, left_cheek_width=80, right_cheek_width=80, model_dir="./models/face-parse-bisent"):
+        self.net = self.model_init(model_dir)
         self.preprocess = self.image_preprocess()
         # Ensure all size parameters are integers
         cone_height = 21
@@ -56,9 +56,9 @@ class FaceParsing():
         cv2.rectangle(mask, (center + right_cheek_width, 0), (512, 512), 255, -1)  # Right cheek
         return mask
 
-    def model_init(self, 
-                   resnet_path='./models/face-parse-bisent/resnet18-5c106cde.pth', 
-                   model_pth='./models/face-parse-bisent/79999_iter.pth'):
+    def model_init(self, model_dir='./models/face-parse-bisent'):
+        resnet_path = os.path.join(model_dir, 'resnet18-5c106cde.pth')
+        model_pth = os.path.join(model_dir, '79999_iter.pth')
         net = BiSeNet(resnet_path)
         if torch.cuda.is_available():
             net.cuda()
