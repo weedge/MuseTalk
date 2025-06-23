@@ -21,8 +21,8 @@ def load_all_model(
     vae = VAE(model_path=vae_dir)
 
     print(f"load unet model from {unet_dir}")
-    unet_config = (os.path.join(unet_dir, "musetalk.json"),)
-    unet_model_path = (os.path.join(unet_dir, "unet.pth"),)
+    unet_config = os.path.join(unet_dir, "musetalk.json")
+    unet_model_path = os.path.join(unet_dir, "unet.pth")
     unet = UNet(unet_config=unet_config, model_path=unet_model_path, device=device)
 
     pe = PositionalEncoding(d_model=384)
